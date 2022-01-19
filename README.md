@@ -1,4 +1,4 @@
-![LOGOmicra](https://user-images.githubusercontent.com/97824024/149670350-7e6fbfd8-0cc1-41f1-b41e-853eef27a3cf.png)
+![MicraLogo](https://user-images.githubusercontent.com/90872140/150163320-00ac71c2-ff39-42e7-a594-37278ca2ae6d.png)
 
 ![](LOGOmicra.png)
 
