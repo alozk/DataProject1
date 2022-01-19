@@ -1,4 +1,4 @@
-![MicraLogo](https://user-images.githubusercontent.com/90872140/150163320-00ac71c2-ff39-42e7-a594-37278ca2ae6d.png)
+![MicraLogo](Logo/MicraLogo.jpg)
 
 ![](LOGOmicra.png)
 
