@@ -40,11 +40,15 @@ En nuestro equipo multidisciplinar destacan el compromiso, la innovación y la h
 
 Está compuesto por:
 
-**Marta Castillo**  
-**Álvaro Chiquillo**  
-**Jose Manuel García**  
-**Ismail Kinani**  
-**Rafa Pérez**
+**Marta Castillo**  [![Linkedin Badge](https://img.shields.io/badge/-Marta-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/chiquillo/)](https://www.linkedin.com/in/marta-castillo-garc%C3%ADa-041bb169/)
+
+**Álvaro Chiquillo**  [![Linkedin Badge](https://img.shields.io/badge/-Alvaro-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/chiquillo/)](https://www.linkedin.com/in/chiquillo/)
+
+**Jose Manuel García**  [![Linkedin Badge](https://img.shields.io/badge/-JoseManuel-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/chiquillo/)](https://www.linkedin.com/in/jogacu/)
+
+**Ismail Kinani**  [![Linkedin Badge](https://img.shields.io/badge/-Ismail-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/chiquillo/)](https://www.linkedin.com/in/ismail-kinani-666472223/)
+
+**Rafa Pérez**  [![Linkedin Badge](https://img.shields.io/badge/-Rafa-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/chiquillo/)](https://www.linkedin.com/in/rafa-perez-solans/)
 
 Contacta con nosotros:
 
