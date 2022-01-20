@@ -45,3 +45,7 @@ Está compuesto por:
 **Jose Manuel García**  
 **Ismail Kinani**  
 **Rafa Pérez**
+
+Contacta con nosotros:
+
+📧 micraconsulting@outloook.es
