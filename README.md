@@ -1,4 +1,4 @@
-![MicraLogo](https://github.com/micra-consulting-sl/Micra-Consulting/blob/main/1.LOGO/MicraLogo.jpg)
+![MicraLogo](https://github.com/micra-consulting-sl/Micra-Consulting/blob/main/LOGO/MicraLogo.jpg)
 
 # MICRA Consulting
 
