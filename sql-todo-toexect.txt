@@ -1,0 +1,13 @@
+create a database called micra
+
+the execute the commented lines in the consumer to create the tables,
+
+run this line in your database visulizer 
+
+CREATE PROCEDURE micra.KMin (id varchar(20), kmwalk FLOAT, kmbike float, date datetime)
+  BEGIN
+    IF (select count(*) from kmcount where clientsId=id and timecal = date_format(date, "%Y-%m-%d"))>0 THEN UPDATE micra.kmcount SET walking_distance = walking_distance +kmwalk, biking_distance  = biking_distance +kmbike WHERE clientsId= id and timecal = date_format(date, "%Y-%m-%d");
+    ELSE
+    INSERT INTO micra.kmcount (clientsId, walking_distance , biking_distance , timecal) VALUES (id, 0, 0, date_format(date, "%Y-%m-%d"));
+    END IF;
+  END
