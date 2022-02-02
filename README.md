@@ -50,3 +50,39 @@ Está compuesto por:
 Contacta con nosotros:
 
 📧 micraconsulting@outloook.es
+
+# Setup
+
+## Iniciar Kafka
+
+Acceder a la carpeta KAFKA_datagenerator y levantar el contenedor.
+
+1) Levantar el contenedor: docker-compose up -d
+2) Crear topic:
+   - docker exec -it kafka /bin/sh
+   - cd kafka_<version>
+   - ./bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 -- partitions 1 --topic <name_topic>
+
+Una vez levantado el contenedor y creado el topic de Kafka, se debe asegurar que el nombre del topic coincida con el que hay en el consumer.py
+
+## Base de datos MySQL
+
+Para levantar la imagen de docker:
+
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d mysql
+    - User: root
+    - Password: secret
+
+Instalar la siguiente libreria de python: 
+
+   - pip install mysql-connector
+
+Para poder visualizar la base de datos:
+
+- Instalar DBeaver (o cualquier otro visualizador) e introducir :
+  - User: root
+  - Password: secret
+  - Port: 3306
+  - DataBase: *empty*
+
+Asegurarse que en el archivo consumer.py el port, user, password coincidan.
