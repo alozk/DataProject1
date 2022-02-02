@@ -1,3 +1,5 @@
+****ACTUALIZADO****☝️☝️Leer el documento Word de variables, esta tarde remato el análisis del dataset(ipynb)
+
 Bueno compañeros, el objetivo de este dataset es dar explicaciones en la medida de lo posible de el porqué de la elección de las variables usadas. Lo malo es de este dataset es que **no me ha permitido el uso de scatterplot dado que solo he usado como cuantitativa la edad**. Los valores de la presión arterial (sistólica y diastólica) tenían números negativos, el dataset es estadounidense y me ha pasado alguna vez que sus mediciones cambian respecto a como las conocemos aquí. **El dataset no parece tener fuente pero parece el más fiable**, entre otras cosas por que aparte de tener sentido, podemos acceder al mismo LinkedIn de la propietaria. El punto bueno es que el **tamaño muestral es de 70.000**. También comentar que ha hecho falta crear desde Python una columna nueva con la edad en años puesto que el dataset solo la proporcionaba en días.
 
 **Para justificar las variables habían dos caminos: sacar de estudios ya realizados las conclusiones a base de texto desde internet o, intentar explicar a base de lo aprendido con Estadística con Python.**
