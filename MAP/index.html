@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Map</title>
+
+  <!-- Fonts -->
+  <link href="http://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JS libs -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+</head>
+<body>
+  <div class="content-wrapper">
+    <div class="external-controls">
+      <label for="years">Monumentos a mostrar:</label>
+      <select id="yearSelector" class="years" name="years">
+        <option value="all">Todos</option>
+        <option value="1800">Antes de 1800</option>
+        <option value="1800-1900">Entre 1800 y 1900</option>
+        <option value="1901-1950">Entre 1901 y 1950</option>
+        <option value="1950">A partir de 1950</option>
+      </select>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <script>
+    let geoJsonData = {};
+    // L.map is the main API class, used to create and manage the map
+    // Short form => const map = L.map('map').setView([39.4629, -0.365], 14);
+    // Full initialization:
+    const map = L.map('map', {
+      center: [39.4729, -0.365],
+      minZoom: 5,
+      maxZoon: 20,
+      zoom: 14
+    });
+
+    // Define a maps provider (optional, just for example)
+    const mapsProvider = {
+      OPEN_STREET: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      CARTO: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+      MAPBOX: ''
+    };
+
+    // Add map layer
+    const mainTile = L.tileLayer(mapsProvider.OPEN_STREET, {
+      maxZoom: 18
+    }).addTo(map);
+    const historicalMonumentsLayer = L.layerGroup().addTo(map);
+
+    // Add a marker with a popup
+    const edemCoordinates = [39.46209, -0.32888];
+    const edemMarker = L.marker(edemCoordinates, {
+      draggable: false
+    }).addTo(map);
+    edemMarker.bindPopup('<b>EDEM</b><br /><span>Escuela de Empresarios de Valencia</span>');
+    // L.popup()
+    //   .setLatLng(xxx)
+    //   .setContent('Contenido personalizado')
+    //   .openOn(map);
+
+    // We add scale widget control
+    L.control.scale().addTo(map);
+
+
+    // Listening to events
+    // -----------------------------------------------------------------------------------------------
+    // click event
+    map.on('click', (evt) => console.log('Se ha pulsado en la coordenada ' + evt.latlng.toString()));
+
+    // zoom event
+    map.on('zoomend', (evt) => console.log('Zoom! ', evt))
+
+
+    // Drawing polygons
+    // -----------------------------------------------------------------------------------------------
+    // A circle (added directly to the map, instead of a layer)
+    const plazaDeToros = L.circle(
+      [39.4667, -0.3762],
+      {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 50
+      }
+    )
+      .addTo(map)
+      .bindPopup('Plaza de toros de Valencia');
+
+    // A polygon (added directly to the map, instead of a layer)
+    const estacionDelNorte = L.polygon([
+      [39.4672, -0.3768],
+      [39.4672, -0.3775],
+      [39.4641, -0.3786],
+      [39.4608, -0.3796],
+      [39.4612, -0.3788],
+    ]).addTo(map);
+
+
+    // Drawing an UI control
+    // -----------------------------------------------------------------------------------------------
+    L.easyButton('fa-home', (btn, map) => {
+      console.log(btn, map);
+      map.flyTo(edemCoordinates, 16, { animate: true, duration: 2 });
+    }, 'Go to EDEM').addTo(map);
+
+
+    // Working with GeoJSON files
+    // -----------------------------------------------------------------------------------------------
+    // Read file
+    fetch('arq-vlc.geojson')
+      .then(response => response.json())
+      .then(jsonData => {
+        L.geoJSON(jsonData).addTo(map)
+        console.log(jsonData);
+        geoJsonData = jsonData;
+        const monuments = L.geoJSON(geoJsonData, {
+          onEachFeature: onEachFeature
+        });
+        historicalMonumentsLayer.addLayer(monuments);
+      })
+      .catch(error => console.log('Error loading GeoJSON!', error));
+
+    // Function to render each GeoJSON element
+    const onEachFeature = (feature, layer) => {
+      if (feature.properties && feature.properties.title) {
+        let htmlPopup = `
+          <h1>${feature.properties.title}</h1>
+          ${feature.properties.description}
+          <br />
+        `;
+
+        if (feature.properties.styles) {
+          for (let i=0; i<feature.properties.styles.length; i++) {
+            const value = feature.properties.styles[i];
+            htmlPopup += `
+              <a href='#' onClick=\"return filterBy('art-styles', '${value}');\">
+                ${value}
+                <i class='fas fa-filter'></i>
+              </a>
+            `;
+          }
+          // Adds a final line break
+          htmlPopup += '<br />';
+        }
+
+        if (feature.properties.authors) {
+          for (var i=0; i<feature.properties.authors.length; i++) {
+            const value = feature.properties.authors[i];
+            htmlPopup += `
+              <a href='#' onClick=\"return filterBy('authors', '${value}');\">
+                ${value}
+                <i class='fas fa-filter'></i>
+              </a>
+            `;
+          }
+          // Adds a final line break
+          htmlPopup += '<br />';
+        }
+
+        // Add the rest of the fields
+        htmlPopup += `
+          Año de construcción: ${feature.properties.year}<br />
+          <a href="${feature.properties.link}" target="_blank">
+            <img class='image-popup' src="${feature.properties.image}" />
+          </a>
+          <br />
+          Fuente:
+          <a href="${feature.properties.link}" target="_blank">
+            ${feature.properties.credit}
+            <i class='fas fa-external-link-alt'></i>
+          </a>
+        `;
+
+        layer.bindPopup(htmlPopup);
+        }
+      };
+
+      const yearSelector = document.getElementById('yearSelector');
+      yearSelector.addEventListener('change', (evt, e2) => {
+        const monuments = L.geoJSON(geoJsonData, {
+          onEachFeature: onEachFeature,
+          filter: (feature, layer) => {
+            // We can use "selectedIndex" or "value" properties from selector
+            switch(yearSelector.selectedIndex) {
+              case 0:  // All
+                return true;
+              case 1:  // Until 1800
+                return +feature.properties.year < 1800;
+              case 2:  // Between 1800 & 1899
+                return +feature.properties.year >= 1800 && +feature.properties.year < 1900;
+              case 3:  // Between 1900 & 1950
+                return +feature.properties.year >= 1900 && +feature.properties.year < 1950;
+              case 4:  // After 1951
+                return +feature.properties.year >= 1950;
+            }
+          }
+        });
+
+        // Remove layer and add the new ones
+        historicalMonumentsLayer.clearLayers();
+        historicalMonumentsLayer.addLayer(monuments);
+      });
+  </script>
+</body>
+</html>
